@@ -28,7 +28,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       working-directory: ./github-pages-generator
     - name: Build
-      run: python build.py --username ${{ github.actor }}
+      run: python build.py --username ${{ github.actor }} --ignore adamws.github.io
       working-directory: ./github-pages-generator
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
