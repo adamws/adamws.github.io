@@ -33,6 +33,8 @@ jobs:
         python build.py --username ${{ github.actor }} --ignore adamws.github.io
         --colorscheme ../colors.json --skip-footer
       working-directory: ./github-pages-generator
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/master' }}
