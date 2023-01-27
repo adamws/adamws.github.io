@@ -30,7 +30,7 @@ jobs:
       working-directory: ./github-pages-generator
     - name: Build
       run: >
-        python build.py --username ${{ github.actor }} --ignore adamws.github.io
+        python build.py --username ${{ github.actor }} --ignore adamws.github.io,ci-sandbox
         --colorscheme ../colors.json --skip-footer
       working-directory: ./github-pages-generator
       env:
