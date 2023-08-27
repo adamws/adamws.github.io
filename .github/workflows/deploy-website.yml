@@ -2,8 +2,6 @@ name: Build and deploy website
 
 on:
   push:
-    branches:
-      - master
   schedule:
     - cron: "0 12 * * *"
 
@@ -13,20 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build
+    - uses: actions/checkout@v3
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: 'latest'
+    - name: Get repositories data
       uses: adamws/github-pages-generator@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         username: ${{ github.actor }}
-        output_dir: ./output
-        colorscheme: f0f5f4,00ab91,f0f5f4,0d1117,005182
+        output_dir: ./data
         ignore_repositories: adamws.github.io,ci-sandbox
-        skip_footer: true
+        data_only: true
+    - name: Build
+      run: hugo --minify
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/master' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: ./output
+        publish_dir: ./public
         force_orphan: true

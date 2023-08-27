@@ -1,0 +1,21 @@
+{{ define "main" }}
+  {{ $image := resources.Get "images/avatar.png" }}
+  <div class="avatar">
+    <a class="no-underline" href="https://github.com/adamws" aria-label="Go to GitHub profile page">
+      <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}">
+    </a>
+  </div>
+  <h1 class="text-center">Projects</h1>
+  {{ partial "github_projects.html" (dict "repositories" $.Site.Data.repositories) }}
+  <h1 class="text-center">Posts</h1>
+  <div class="posts">
+    {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+      <ul class="list-style-none text-center">
+        <li>
+          {{ range $pages }}
+            <h3><a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          {{ end }}
+        </li>
+      </ul>
+  </div>
+{{ end }}

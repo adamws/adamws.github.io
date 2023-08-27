@@ -1,0 +1,44 @@
+<div class="projects">
+  {{ range .repositories }}
+      <div class="project-entry">
+        <p class="project-name">
+          <a class="text-bold" href="{{ .html_url }}" aria-label="Go to {{ .name }} repository">
+            {{ partial "octicon_repo.html" }}
+            {{ .name }}
+          </a>
+        </p>
+        <p class="project-description">
+          {{ if and (.description) (ne .description "") }}
+            {{ .description }}
+          {{ end }}
+        </p>
+        <p class="project-homepage">
+          {{ if and (.homepage) (ne .homepage "") }}
+            <a href="{{ .homepage }}">{{ .homepage }}</a>
+          {{ end }}
+        </p>
+        <ul class="project-languages text-small list-style-none">
+          {{ range $language, $percentage := .languages }}
+            <li class="d-inline margin-8px">
+              <span class="text-bold text-color-1 margin-4px">{{ $language }}</span>
+              <span>{{ $percentage }}%</span>
+            </li>
+          {{ end }}
+        </ul>
+        <p class="project-stats text-small">
+          <a class="no-underline margin-8px" href="{{ .html_url }}/stargazers" aria-label="Go to {{ .name }}'s stargazers">
+            {{ partial "octicon_star.html" }}
+            {{ .stargazers_count }}
+          </a>
+          <a class="no-underline margin-8px" href="{{ .html_url }}/network/members" aria-label="Go to {{ .name }}'s network members">
+            {{ partial "octicon_repo_forked.html" }}
+            {{ .forks_count }}
+          </a>
+          <span class="float-right">
+            {{ partial "octicon_clock.html" }}
+            Updated: {{ .pushed_at }}
+          </span>
+        </p>
+      </div>
+  {{ end }}
+</div>
