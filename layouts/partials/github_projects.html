@@ -18,11 +18,13 @@
           {{ end }}
         </p>
         <ul class="project-languages text-small list-style-none">
-          {{ range $language, $percentage := .languages }}
-            <li class="d-inline margin-8px">
-              <span class="text-bold text-color-1 margin-4px">{{ $language }}</span>
-              <span>{{ $percentage }}%</span>
-            </li>
+          {{ range $map := .languages }}
+            {{ range $key, $value := $map }}
+              <li class="d-inline margin-8px">
+                <span class="text-bold text-color-1 margin-4px">{{ $key }}</span>
+                <span>{{ $value }}%</span>
+              </li>
+            {{ end }}
           {{ end }}
         </ul>
         <p class="project-stats text-small">
