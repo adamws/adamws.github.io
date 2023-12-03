@@ -146,3 +146,10 @@ code {
   padding: 15px;
 }
 
+.footnotes {
+  font-size: 12px !important;
+}
+
+.footnotes ol li p {
+  margin: 4px !important;
+}
