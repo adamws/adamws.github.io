@@ -22,7 +22,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         username: ${{ github.actor }}
         output_dir: ./data
-        ignore_repositories: adamws.github.io,ci-sandbox
+        ignore_repositories: adamws,adamws.github.io,ci-sandbox
         data_only: true
     - name: Build
       run: hugo --minify
