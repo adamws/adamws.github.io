@@ -6,7 +6,7 @@
     </a>
   </div>
   <h1 class="text-center">Projects</h1>
-  {{ partial "github_projects.html" (dict "repositories" $.Site.Data.repositories) }}
+  {{ partial "github_projects.html" (dict "repositories" $.Site.Data.repositoriesnew) }}
   <h1 class="text-center">Posts</h1>
   <div class="posts">
     {{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}

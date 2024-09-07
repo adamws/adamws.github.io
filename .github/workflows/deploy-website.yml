@@ -12,6 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.11
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
       with:
@@ -24,6 +28,9 @@ jobs:
         output_dir: ./data
         ignore_repositories: adamws,adamws.github.io,ci-sandbox
         data_only: true
+    - name: Cleanup languages data
+      run: |
+        python scripts/clean_languages.py -in data/repositories.json
     - name: Build
       run: hugo --minify
     - name: Deploy
