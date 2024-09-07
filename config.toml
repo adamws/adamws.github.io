@@ -24,3 +24,8 @@ title = 'adamws.github.io'
     noHl = false
     style = 'github'
     tabWidth = 4
+
+[services]
+  [services.googleAnalytics]
+    ID = 'G-47SFRLYXCP'
+
