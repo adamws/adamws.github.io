@@ -4,6 +4,7 @@ title = 'adamws.github.io'
 
 [params]
   custom_css = ["css/style.css"]
+  description = 'Personal projects and thoughts'
 
 [permalinks]
   posts = "/:title"
