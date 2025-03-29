@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:url" content="https://adamws.github.io/pcb-visual-diff-with-kicad-cli-and-lukaj/"><meta property="og:site_name" content="adamws.github.io"><meta property="og:title" content="PCB visual diff with kicad-cli and lukaj"><meta property="og:description" content="Issue While working on the functional tests of kicad-kbplacer I found that automatic SVG file comparison is harder than it seems. That’s because different textual representations can produce same graphical result.
+The current tests implementation, while not simple, works pretty well. The PCB output file is used to render multiple SVG files (one per layer) and these files are compared with references using xmldiff which does most of the heavy lifting. Some of differences found, such as moved nodes or changed textLength attributes, are ignored (KiCad does not keep the order of nodes), and the other are indication of failed test.1"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2023-12-02T00:00:00+00:00"><meta property="article:modified_time" content="2023-12-02T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="PCB visual diff with kicad-cli and lukaj"><meta name=twitter:description content="Issue While working on the functional tests of kicad-kbplacer I found that automatic SVG file comparison is harder than it seems. That’s because different textual representations can produce same graphical result.
+The current tests implementation, while not simple, works pretty well. The PCB output file is used to render multiple SVG files (one per layer) and these files are compared with references using xmldiff which does most of the heavy lifting. Some of differences found, such as moved nodes or changed textLength attributes, are ignored (KiCad does not keep the order of nodes), and the other are indication of failed test.1"><script async src="https://www.googletagmanager.com/gtag/js?id=G-47SFRLYXCP"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-47SFRLYXCP")}</script><script defer src=https://cloud.umami.is/script.js data-website-id=dbdd840e-6074-41d4-8a10-7985bb486522></script><title>adamws.github.io - PCB visual diff with kicad-cli and lukaj
+</title><link rel=stylesheet href=https://adamws.github.io/css/style.css></head><script></script><body><div id=content><div class=post><h1>PCB visual diff with kicad-cli and lukaj</h1><h2 id=issue>Issue</h2><p>While working on the functional tests of <a href=https://github.com/adamws/kicad-kbplacer>kicad-kbplacer</a>
+I found that automatic SVG file comparison is harder than it seems.
+That&rsquo;s because different textual representations can produce same graphical result.</p><p>The current tests implementation, while not simple, works pretty well.
+The PCB output file is used to render multiple SVG files (one per layer) and
+these files are compared with references using <a href=https://pypi.org/project/xmldiff/>xmldiff</a>
+which does most of the heavy lifting. Some of differences found, such as moved nodes
+or changed <code>textLength</code> attributes, are ignored (KiCad does not keep the order of nodes),
+and the other are indication of failed test.<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></p><p>Unfortunately this approach does not always work.
+I&rsquo;m still getting false positives from time to time - for example
+after KiCad version updates.<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> Another situation where this is not enough, is when
+I&rsquo;m changing the behaviour of the plugin and need an easy way to check if produced PCB
+files are ok or if the references must be regenerated<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> to match new implementation.
+This requires visual inspection.</p><h2 id=solution>Solution</h2><p>To my surprise, I couldn&rsquo;t find any a good standalone SVG visual comparison tool,
+so I started the <a href=https://github.com/adamws/lukaj>lukaj</a> project.</p><p>It is currently in the early stages, with some of rough edges, but already quite usable
+(if you don&rsquo;t mind crashes when zooming too much).</p><p>I&rsquo;m using lukaj with the kicad-cli and a simple wrapper shell script:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span><span style=color:#57606a>#!/bin/sh
+</span></span></span><span style=display:flex><span><span style=color:#57606a></span>
+</span></span><span style=display:flex><span><span style=color:#57606a># ~/.local/bin/diff-kicad - wrapper for lukaj and kicad-cli</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#6639ba>set</span> -euo pipefail
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#953800>TEMP1</span><span style=color:#0550ae>=</span><span style=color:#cf222e>$(</span>mktemp<span style=color:#cf222e>)</span>
+</span></span><span style=display:flex><span><span style=color:#953800>TEMP2</span><span style=color:#0550ae>=</span><span style=color:#cf222e>$(</span>mktemp<span style=color:#cf222e>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>generate_svg<span style=color:#0550ae>()</span> <span style=color:#0550ae>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#953800>INPUT</span><span style=color:#0550ae>=</span><span style=color:#953800>$1</span>
+</span></span><span style=display:flex><span>  <span style=color:#953800>OUTPUT</span><span style=color:#0550ae>=</span><span style=color:#953800>$2</span>
+</span></span><span style=display:flex><span>  kicad-cli pcb <span style=color:#6639ba>export</span> svg --exclude-drawing-sheet --page-size-mode <span style=color:#0550ae>2</span> <span style=color:#0a3069>\
+</span></span></span><span style=display:flex><span><span style=color:#0a3069></span>    -l <span style=color:#0a3069>&#34;B.Cu,F.Cu,B.Silkscreen,F.Silkscreen,Edge.Cuts,B.Mask,F.Mask&#34;</span> <span style=color:#0a3069>\
+</span></span></span><span style=display:flex><span><span style=color:#0a3069></span>    -o <span style=color:#953800>$OUTPUT</span> <span style=color:#953800>$INPUT</span>
+</span></span><span style=display:flex><span><span style=color:#0550ae>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>generate_svg <span style=color:#953800>$1</span> <span style=color:#953800>$TEMP1</span>
+</span></span><span style=display:flex><span>generate_svg <span style=color:#953800>$2</span> <span style=color:#953800>$TEMP2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>~/.cargo/bin/lukaj <span style=color:#953800>$TEMP1</span> <span style=color:#953800>$TEMP2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>rm <span style=color:#953800>$TEMP1</span> <span style=color:#953800>$TEMP2</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>diff-kicad</code> wrapper can be used directly or be configured
+as <a href=https://git-scm.com/docs/git-difftool>git difftool</a>.
+To use it with git, add following sections to <code>.gitconfig</code>:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#0550ae>[</span>difftool <span style=color:#0a3069>&#34;diff-kicad&#34;</span><span style=color:#0550ae>]</span>
+</span></span><span style=display:flex><span>    <span style=color:#953800>cmd</span> <span style=color:#0550ae>=</span> ~/.local/bin/diff-kicad <span style=color:#953800>$LOCAL</span> <span style=color:#953800>$REMOTE</span>
+</span></span><span style=display:flex><span><span style=color:#0550ae>[</span>alias<span style=color:#0550ae>]</span>
+</span></span><span style=display:flex><span>    diff-kicad <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;difftool -t diff-kicad&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Now, it is available with <code>git diff-kicad</code> command:</p><p><img src=/img/0002/demo.gif alt=demo></p><p>To learn more about lukaj, visit <a href=https://github.com/adamws/lukaj>https://github.com/adamws/lukaj</a>.</p><p>I also developed small convenience KiCad plugin which adds
+<a href=https://git-scm.com/docs/git-gui>git GUI</a> launcher to toolbar, see: <a href=https://github.com/adamws/kicad-git>https://github.com/adamws/kicad-git</a>.
+This GUI has <code>Tools</code> menu entry which is user configurable.
+To add <code>diff-kicad</code> to it, append following settings to <code>.gitconfig</code>:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#0550ae>[</span>guitool <span style=color:#0a3069>&#34;diff-kicad&#34;</span><span style=color:#0550ae>]</span>
+</span></span><span style=display:flex><span>    <span style=color:#953800>cmd</span> <span style=color:#0550ae>=</span> git difftool -y -t diff-kicad <span style=color:#953800>$FILENAME</span>
+</span></span><span style=display:flex><span>    <span style=color:#953800>noconsole</span> <span style=color:#0550ae>=</span> yes
+</span></span><span style=display:flex><span>    <span style=color:#953800>needsfile</span> <span style=color:#0550ae>=</span> yes
+</span></span></code></pre></td></tr></table></div></div><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p><a href=https://github.com/adamws/kicad-kbplacer/blob/5857181ff7af8b3f40f596f997a100cc83e31e57/tests/test_with_examples.py#L65>tests/test_with_examples.py#L65</a>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p><a href=https://github.com/adamws/kicad-kbplacer/commit/f36f959240eff96cc2b9444837473cd28e011d24>f36f959240eff96cc2b9444837473cd28e011d24</a>&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p><a href=https://github.com/adamws/kicad-kbplacer/commit/eac1edd63b15f90ebe6ac500cea81a241a73fd82>eac1edd63b15f90ebe6ac500cea81a241a73fd82</a>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div></div><footer><a href=https://adamws.github.io/>Back to Home</a></footer></body></html>

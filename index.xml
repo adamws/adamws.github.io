@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>adamws.github.io</title><link>https://adamws.github.io/</link><description>Recent content on adamws.github.io</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sat, 22 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://adamws.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Using the new KiCad IPC API in a CI environment</title><link>https://adamws.github.io/using-the-new-kicad-ipc-api-in-a-ci-environment/</link><pubDate>Sat, 22 Mar 2025 00:00:00 +0000</pubDate><guid>https://adamws.github.io/using-the-new-kicad-ipc-api-in-a-ci-environment/</guid><description>&lt;p>KiCad 9 introduced a new &lt;a href="https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/index.html">IPC API&lt;/a>.
+The old SWIG-based Python bindings are now deprecated and are planned for removal in the next major
+release. Plugin developers are encouraged to start migrating.&lt;/p>
+&lt;p>The old API has one major advantage over the new one from a testing and continuous integration
+perspective - it works without running a GUI application and requires no extra setup for use in
+Docker containers or CI agent machines.
+Currently, the new API requires running instance of the &lt;em>PCB Editor&lt;/em>. Although there are plans
+to enable headless mode via &lt;code>kicad-cli&lt;/code>, at the time of writing, the only way to use the new API is
+by launching &lt;code>pcbnew&lt;/code> (the GUI application) first.&lt;/p></description></item><item><title>Keyboard PCB design with ergogen and kbplacer</title><link>https://adamws.github.io/keyboard-pcb-design-with-ergogen-and-kbplacer/</link><pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate><guid>https://adamws.github.io/keyboard-pcb-design-with-ergogen-and-kbplacer/</guid><description>&lt;p>Let&amp;rsquo;s create KiCad project using &lt;a href="https://github.com/ergogen/ergogen">ergogen&lt;/a> and &lt;a href="https://github.com/adamws/kicad-kbplacer">kbplacer&lt;/a>.
+Although ergogen is capable of generating KiCad PCB files, I will be using it only
+to create key matrix layout. This will result in more traditional KiCad project
+structure including schematic.&lt;/p>
+&lt;p>Footprints placement and some initial routing will be handled by kbplacer.&lt;/p>
+&lt;h2 id="get-ergogen-points-file">Get ergogen points file&lt;/h2>
+&lt;p>Ergogen configuration is beyond the scope of this tutorial, for simplicity I will be
+using web-based deployment at &lt;a href="https://ergogen.cache.works/">ergogen.cache.works&lt;/a>.&lt;/p></description></item><item><title>PCB visual diff with kicad-cli and lukaj</title><link>https://adamws.github.io/pcb-visual-diff-with-kicad-cli-and-lukaj/</link><pubDate>Sat, 02 Dec 2023 00:00:00 +0000</pubDate><guid>https://adamws.github.io/pcb-visual-diff-with-kicad-cli-and-lukaj/</guid><description>&lt;h2 id="issue">Issue&lt;/h2>
+&lt;p>While working on the functional tests of &lt;a href="https://github.com/adamws/kicad-kbplacer">kicad-kbplacer&lt;/a>
+I found that automatic SVG file comparison is harder than it seems.
+That&amp;rsquo;s because different textual representations can produce same graphical result.&lt;/p>
+&lt;p>The current tests implementation, while not simple, works pretty well.
+The PCB output file is used to render multiple SVG files (one per layer) and
+these files are compared with references using &lt;a href="https://pypi.org/project/xmldiff/">xmldiff&lt;/a>
+which does most of the heavy lifting. Some of differences found, such as moved nodes
+or changed &lt;code>textLength&lt;/code> attributes, are ignored (KiCad does not keep the order of nodes),
+and the other are indication of failed test.&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p></description></item><item><title>X11 clipboard synchronization with blacklisted apps</title><link>https://adamws.github.io/x11-clipboard-synchronization-with-blacklisted-apps/</link><pubDate>Sat, 06 May 2023 00:00:00 +0000</pubDate><guid>https://adamws.github.io/x11-clipboard-synchronization-with-blacklisted-apps/</guid><description>&lt;p>If you are X11 user, you have two main selection types &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup> (often called clipboards) to your disposal:&lt;/p>
+&lt;ul>
+&lt;li>PRIMARY: used when you select text with the mouse and use middle-mouse button to paste it&lt;/li>
+&lt;li>CLIPBOARD: used for explicitly copy/paste commands, most typically &lt;em>ctrl+c&lt;/em>/&lt;em>ctrl+v&lt;/em> shortcuts&lt;/li>
+&lt;/ul>
+&lt;p>I&amp;rsquo;m sure that this is useful for some, but if you are anything like me, single clipboard would be sufficient
+and easier to use.
+Thankfully, this is easily achievable with &lt;code>autocutsel&lt;/code> &lt;sup id="fnref:2">&lt;a href="#fn:2" class="footnote-ref" role="doc-noteref">2&lt;/a>&lt;/sup> which I start in my &lt;code>.xinitrc&lt;/code>:&lt;/p></description></item></channel></rss>
