@@ -1,0 +1,154 @@
+<!doctype html><html><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:url" content="https://adamws.github.io/keyboard-pcb-design-with-ergogen-and-kbplacer/"><meta property="og:site_name" content="adamws.github.io"><meta property="og:title" content="Keyboard PCB design with ergogen and kbplacer"><meta property="og:description" content="Let’s create KiCad project using ergogen and kbplacer. Although ergogen is capable of generating KiCad PCB files, I will be using it only to create key matrix layout. This will result in more traditional KiCad project structure including schematic.
+Footprints placement and some initial routing will be handled by kbplacer.
+Get ergogen points file Ergogen configuration is beyond the scope of this tutorial, for simplicity I will be using web-based deployment at ergogen.cache.works."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-02-24T00:00:00+00:00"><meta property="article:modified_time" content="2024-02-24T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Keyboard PCB design with ergogen and kbplacer"><meta name=twitter:description content="Let’s create KiCad project using ergogen and kbplacer. Although ergogen is capable of generating KiCad PCB files, I will be using it only to create key matrix layout. This will result in more traditional KiCad project structure including schematic.
+Footprints placement and some initial routing will be handled by kbplacer.
+Get ergogen points file Ergogen configuration is beyond the scope of this tutorial, for simplicity I will be using web-based deployment at ergogen.cache.works."><script async src="https://www.googletagmanager.com/gtag/js?id=G-47SFRLYXCP"></script><script>var dnt,doNotTrack=!1;if(!1&&(dnt=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack,doNotTrack=dnt=="1"||dnt=="yes"),!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-47SFRLYXCP")}</script><script defer src=https://cloud.umami.is/script.js data-website-id=dbdd840e-6074-41d4-8a10-7985bb486522></script><title>adamws.github.io - Keyboard PCB design with ergogen and kbplacer
+</title><link rel=stylesheet href=https://adamws.github.io/css/style.css></head><script></script><body><div id=content><div class=post><h1>Keyboard PCB design with ergogen and kbplacer</h1><p>Let&rsquo;s create KiCad project using <a href=https://github.com/ergogen/ergogen>ergogen</a> and <a href=https://github.com/adamws/kicad-kbplacer>kbplacer</a>.
+Although ergogen is capable of generating KiCad PCB files, I will be using it only
+to create key matrix layout. This will result in more traditional KiCad project
+structure including schematic.</p><p>Footprints placement and some initial routing will be handled by kbplacer.</p><h2 id=get-ergogen-points-file>Get ergogen points file</h2><p>Ergogen configuration is beyond the scope of this tutorial, for simplicity I will be
+using web-based deployment at <a href=https://ergogen.cache.works/>ergogen.cache.works</a>.</p><p><img src=/img/0003/ergogen-absolem.png alt=ergogen-absolem></p><p>To learn how this ergogen&rsquo;s layout description format works see <a href=https://docs.ergogen.xyz/>ergogen docs</a>.
+For demonstration purposes I selected <code>Absolem (simplified)</code> preset to which I added
+rows and columns nets. This is not required but it will save me some work in next step.
+Details about matrix annotations can be found in <a href=https://flatfootfox.com/ergogen-part3-pcbs/>flatfootfox guide</a>.</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff><span style=display:flex><span> points:
+</span></span><span style=display:flex><span>   zones:
+</span></span><span style=display:flex><span>     matrix:
+</span></span><span style=display:flex><span>       anchor:
+</span></span><span style=display:flex><span>         rotate: 5
+</span></span><span style=display:flex><span>       columns:
+</span></span><span style=display:flex><span>         pinky:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C0
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         ring:
+</span></span><span style=display:flex><span>           key.splay: -5
+</span></span><span style=display:flex><span>           key.origin: [-12, -19]
+</span></span><span style=display:flex><span>           key.stagger: 12
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C1
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         middle:
+</span></span><span style=display:flex><span>           key.stagger: 5
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C2
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         index:
+</span></span><span style=display:flex><span>           key.stagger: -6
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C3
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         inner:
+</span></span><span style=display:flex><span>           key.stagger: -2
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C4
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>       rows:
+</span></span><span style=display:flex><span>         bottom:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          row_net: R2
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          mirror.row_net: R6
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         home:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          row_net: R1
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          mirror.row_net: R5
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         top:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          row_net: R0
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          mirror.row_net: R4
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>     thumbfan:
+</span></span><span style=display:flex><span>       anchor:
+</span></span><span style=display:flex><span>         ref: matrix_inner_bottom
+</span></span><span style=display:flex><span>         shift: [-7, -19]
+</span></span><span style=display:flex><span>       columns:
+</span></span><span style=display:flex><span>         near:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C2
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         home:
+</span></span><span style=display:flex><span>           key.spread: 21.25
+</span></span><span style=display:flex><span>           key.splay: -28
+</span></span><span style=display:flex><span>           key.origin: [-11.75, -9]
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C3
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>         far:
+</span></span><span style=display:flex><span>           key.spread: 21.25
+</span></span><span style=display:flex><span>           key.splay: -28
+</span></span><span style=display:flex><span>           key.origin: [-9.5, -9]
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          key.column_net: C4
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>       rows:
+</span></span><span style=display:flex><span>         thumb:
+</span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          row_net: R3
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1>+          mirror.row_net: R7
+</span></span></span><span style=display:flex><span><span style=color:#116329;background-color:#dafbe1></span>   rotate: -20
+</span></span><span style=display:flex><span>   mirror:
+</span></span><span style=display:flex><span>     ref: matrix_pinky_home
+</span></span><span style=display:flex><span>     distance: 223.7529778
+</span></span></code></pre></td></tr></table></div></div><p>Now I can run <em>Generate</em> and download <code>points.yml</code> file which will be used by kbplacer.</p><h2 id=convert-ergogen-points-to-kle-layout>Convert ergogen points to KLE layout</h2><p>From now on, I will be using kbplacer which is python package using KiCad&rsquo;s python API.
+For installation options see <a href="https://github.com/adamws/kicad-kbplacer?tab=readme-ov-file#installation">installation guide</a>.</p><p>First I will install it in virtual environment in newly created project directory:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>mkdir absolem-kbplacer <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#6639ba>cd</span> absolem-kbplacer
+</span></span><span style=display:flex><span>python -m venv --system-site-packages .env
+</span></span><span style=display:flex><span>. .env/bin/activate
+</span></span><span style=display:flex><span>pip install kbplacer
+</span></span></code></pre></td></tr></table></div></div><p>On Windows use python distributed with KiCad, otherwise kbplacer will not have access to KiCad&rsquo;s bindings.</p><p>Now, to convert ergogen points file to KLE layout run:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>python -m kbplacer.kle_serial -in points.yaml -inform ERGOGEN_INTERNAL <span style=color:#0a3069>\
+</span></span></span><span style=display:flex><span><span style=color:#0a3069></span>  -outform KLE_RAW -out absolem-kle.json
+</span></span></code></pre></td></tr></table></div></div><p>The resulting file can be imported by <a href=http://www.keyboard-layout-editor.com/>keyboard-layout-editor</a>:</p><p><img src=/img/0003/absolem-keyboard-layout.png alt=absolem-keyboard-layout></p><h2 id=generate-kicad-schematic>Generate KiCad schematic</h2><p>To generate KiCad schematic I will use example kbplacer tool which currently is not a part
+of the package itself. It is just a single script with one dependency so it should be easy to run.
+Within previously initialized python virtual environment run:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>wget https://raw.githubusercontent.com/adamws/kicad-kbplacer/master/tools/layout2schematic.py
+</span></span><span style=display:flex><span>pip install kicad-skip<span style=color:#0550ae>==</span>0.2.5
+</span></span></code></pre></td></tr></table></div></div><p>To generate new schematic file run:</p><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span> python layout2schematic.py -in absolem-kle.json -out absolem.kicad_sch
+</span></span></code></pre></td></tr></table></div></div><p>The result should be as following:</p><p><img src=/img/0003/schematic.png alt=schematic></p><p>Generation of MCU circuit is not automatic. It can be added later, for this tutorial I skip it entirely.
+Remember to assign footprints to symbols. To do it in bulk use <code>Tools->Asign Footprints...</code>.</p><p>Then create PCB and import changes from schematic.</p><p>In order to place and route imported footprints, use kbplacer again. For details
+how to use it from CLI see <code>python -m kbplacer --help</code> output.</p><p>In order to use it with GUI from KiCad, install it as <a href="https://github.com/adamws/kicad-kbplacer?tab=readme-ov-file#installation-as-kicad-plugin">kicad plugin</a>.
+Plugin icon will appear on the toolbar. Start it to see something like this:</p><p><img src=/img/0003/pcb-before.png alt=pcb-before></p><p>In this instance I&rsquo;m using previously generated layout file with <code>Relative</code> position diode option
+and automatic routing enabled. This way the plugin will replicate my first switch-diode pair connection for
+remaining switches. See <a href="https://github.com/adamws/kicad-kbplacer?tab=readme-ov-file#options-overview">options overview</a> to learn more.</p><p>After clicking <strong>OK</strong> I got following result:</p><p><img src=/img/0003/pcb-after.png alt=pcb-after></p><p>And that is all. The process requires some manual steps (i.e. assigning footprints, importing schematic to PCB)
+but it can be fully automated (see <a href=https://github.com/adamws/kicad-kbplacer/tree/master/examples/absolem-ergogen>this</a>).</p><hr></div></div><footer><a href=https://adamws.github.io/>Back to Home</a></footer></body></html>
