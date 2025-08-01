@@ -150,6 +150,66 @@ code {
   margin: 15px;
 }
 
+.posts-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.post-entry-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.post-entry {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border-left: 4px solid var(--color-projects-background);
+}
+
+.post-entry-link:hover .post-entry {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.post-entry-link:hover .post-title {
+  color: var(--color-text-link);
+}
+
+.post-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.post-title {
+  margin: 0;
+  flex-grow: 1;
+  color: var(--color-text);
+  font-size: 1.2em !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
+.post-date {
+  color: #666 !important;
+  font-size: 0.85em !important;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .post-date {
+    font-size: 0.8em;
+  }
+}
+
 .avatar img {
   margin: auto;
   display: block;
