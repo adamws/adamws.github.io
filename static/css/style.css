@@ -115,8 +115,17 @@ code {
   background-color: var(--color-project-card);
   margin: 10px;
   padding: 20px;
-  border-radius: 10px;
 }
+
+.project-entry {
+    border-radius: 10px;
+    transition: border-radius 500ms ease;
+}
+
+.project-entry:hover {
+  border-radius: 0px;
+}
+
 
 .project-entry > p {
   min-height: 1em;
