@@ -27,6 +27,7 @@ jobs:
         username: ${{ github.actor }}
         output_dir: ./data
         ignore_repositories: adamws,adamws.github.io,ci-sandbox
+        ignore_archived: true
         data_only: true
     - name: Cleanup languages data
       run: |
