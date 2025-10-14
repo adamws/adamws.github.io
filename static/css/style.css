@@ -236,6 +236,11 @@ code {
   }
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .avatar img {
   margin: auto;
   display: block;
