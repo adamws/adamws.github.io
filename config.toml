@@ -10,6 +10,9 @@ title = 'adamws.github.io'
   posts = "/:title"
 
 [markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
   [markup.highlight]
     anchorLineNos = false
     codeFences = true
